@@ -5,26 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ワイバーンコンサルティング | ホーム</title>
   <style>
-    /* ========= 共通スタイル ========= */
+    /* 共通スタイル */
     body {
       margin: 0;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       color: #333;
       line-height: 1.6;
+      overflow-x: hidden;
     }
-    a { text-decoration: none; }
-    /* 認証前は非表示 */
-    #content { display: none; }
-    /* ヘッダー */
+    a {
+      text-decoration: none;
+    }
+    #content {
+      display: none;
+    }
     header {
       background: #B300B3;
       color: #fff;
       padding: 20px 0;
       text-align: center;
     }
-    header h1 { margin: 0; font-size: 2.5em; }
-    header p { margin: 10px 0 0; font-size: 1.2em; }
-    /* ナビゲーション */
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+    header p {
+      margin: 10px 0 0;
+      font-size: 1.2em;
+    }
     nav {
       background: #fff;
       padding: 10px 0;
@@ -37,8 +45,37 @@
       font-weight: bold;
       transition: color 0.3s ease;
     }
-    nav a:hover { color: #800080; }
-    /* セクション */
+    nav a:hover {
+      color: #800080;
+    }
+    .hero {
+      background: url('https://via.placeholder.com/1500x500') center center/cover no-repeat;
+      color: #fff;
+      text-align: center;
+      padding: 100px 20px;
+      position: relative;
+    }
+    .hero::after {
+      content: "";
+      background: rgba(0,0,0,0.5);
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    .hero h2 {
+      font-size: 3em;
+      margin: 0 0 20px;
+    }
+    .hero p {
+      font-size: 1.2em;
+      margin: 0 0 40px;
+    }
     section {
       padding: 60px 20px;
       text-align: center;
@@ -48,18 +85,31 @@
       font-size: 2em;
       margin-bottom: 20px;
     }
-    /* フッター */
     footer {
       background: #333;
       color: #fff;
       text-align: center;
       padding: 20px 0;
     }
-    
+    /* 遷移用オーバーレイ */
+    #transition-overlay {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      background: linear-gradient(to top, #ff4500, #ffa500, #ffff00);
+      z-index: 10000;
+      pointer-events: none;
+      transition: height 1.5s ease-in;
+    }
+    #transition-overlay.active {
+      height: 100%;
+    }
   </style>
   <script>
-    // パスワード認証スクリプト（各ページ共通）
     document.addEventListener("DOMContentLoaded", function(){
+      // パスワード認証
       var password = "urata";
       var auth = sessionStorage.getItem("authenticated");
       if (!auth) {
@@ -70,23 +120,33 @@
         } else {
           alert("パスワードが違います。アクセスできません。");
           document.body.innerHTML = "<h1>アクセス拒否</h1>";
+          return;
         }
       } else {
         document.getElementById("content").style.display = "block";
       }
       
-   </script>
+      // 遷移エフェクト用：ナビゲーションリンククリック時にオーバーレイを表示して遷移
+      var navLinks = document.querySelectorAll('nav a');
+      navLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          var target = this.getAttribute('href');
+          document.getElementById('transition-overlay').classList.add('active');
+          setTimeout(function() {
+            window.location.href = target;
+          }, 1500);
+        });
+      });
+    });
+  </script>
 </head>
 <body>
-  <!-- メインコンテンツ（パスワード認証済みの場合のみ表示） -->
   <div id="content">
-    <!-- ヘッダー -->
     <header>
       <h1>ワイバーンコンサルティング</h1>
       <p>社員がドラゴンのように飛び立つキャリア構築の伴走者</p>
     </header>
-    
-    <!-- ナビゲーション -->
     <nav>
       <a href="index.html">ホーム</a>
       <a href="services.html">サービス紹介</a>
@@ -95,26 +155,20 @@
       <a href="blog.html">ブログ</a>
       <a href="contact.html">お問い合わせ</a>
     </nav>
-    
-    <!-- ホーム専用コンテンツ -->
     <div class="hero">
       <div class="hero-content">
         <h2>未来を切り拓く戦略立案</h2>
         <p>あなたのキャリアをワイバーンのように羽ばたかせる</p>
       </div>
     </div>
-    
     <section id="overview">
       <h2>ようこそワイバーンコンサルティングへ</h2>
       <p>私たちは、情熱と革新を武器にクライアントの成功をサポートするパートナーです。</p>
     </section>
-    
-    <!-- フッター -->
     <footer>
       <p>&copy; 2025 ワイバーンコンサルティング. All Rights Reserved.</p>
     </footer>
   </div>
-  
   <!-- 遷移エフェクト用オーバーレイ -->
   <div id="transition-overlay"></div>
 </body>
