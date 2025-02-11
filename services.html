@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ワイバーンコンサルティング | サービス紹介</title>
   <style>
-    /* 共通スタイル（index.htmlと同じ） */
-    body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; line-height: 1.6; }
+    /* 共通スタイル */
+    body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; line-height: 1.6; overflow-x: hidden; }
     a { text-decoration: none; }
     #content { display: none; }
     header { background: #B300B3; color: #fff; padding: 20px 0; text-align: center; }
@@ -26,9 +26,21 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     footer { background: #333; color: #fff; text-align: center; padding: 20px 0; }
+    /* 遷移エフェクト用オーバーレイ */
+    #transition-overlay {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      background: linear-gradient(to top, #ff4500, #ffa500, #ffff00);
+      z-index: 10000;
+      pointer-events: none;
+      transition: height 1.5s ease-in;
+    }
+    #transition-overlay.active { height: 100%; }
   </style>
   <script>
-    // パスワード認証スクリプト
     document.addEventListener("DOMContentLoaded", function(){
       var password = "urata";
       var auth = sessionStorage.getItem("authenticated");
@@ -40,22 +52,31 @@
         } else {
           alert("パスワードが違います。アクセスできません。");
           document.body.innerHTML = "<h1>アクセス拒否</h1>";
+          return;
         }
       } else {
         document.getElementById("content").style.display = "block";
       }
+      var navLinks = document.querySelectorAll('nav a');
+      navLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          var target = this.getAttribute('href');
+          document.getElementById('transition-overlay').classList.add('active');
+          setTimeout(function() {
+            window.location.href = target;
+          }, 1500);
+        });
+      });
     });
   </script>
 </head>
 <body>
   <div id="content">
-    <!-- ヘッダー -->
     <header>
       <h1>ワイバーンコンサルティング</h1>
       <p>社員がドラゴンのように飛び立つキャリア構築の伴走者</p>
     </header>
-
-    <!-- ナビゲーション -->
     <nav>
       <a href="index.html">ホーム</a>
       <a href="services.html">サービス紹介</a>
@@ -64,20 +85,17 @@
       <a href="blog.html">ブログ</a>
       <a href="contact.html">お問い合わせ</a>
     </nav>
-
-    <!-- サービス紹介専用コンテンツ -->
-    <section id="services" class="services">
+    <section id="services">
       <h2>サービス紹介</h2>
       <div class="service-item">
         <h3>戦略立案</h3>
         <p>私たちは、企業の未来を見据えた戦略立案に特化しています。革新的なアイデアと実行力で、クライアントの成長をサポートします。</p>
       </div>
     </section>
-
-    <!-- フッター -->
     <footer>
       <p>&copy; 2025 ワイバーンコンサルティング. All Rights Reserved.</p>
     </footer>
   </div>
+  <div id="transition-overlay"></div>
 </body>
 </html>
