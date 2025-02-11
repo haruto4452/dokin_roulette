@@ -1,76 +1,94 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ワイバーンコンサルティング | ホーム</title>
   <style>
     /* 共通スタイル */
     body {
       margin: 0;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      color: #333;
       line-height: 1.6;
+      /* 添付画像を背景に設定 */
+      background: #000 url("dragon_bg.png") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
       overflow-x: hidden;
     }
-    a { text-decoration: none; }
-    #content { display: none; }
-    header {
-      background: #B300B3;
+    a {
+      text-decoration: none;
       color: #fff;
-      padding: 20px 0;
-      text-align: center;
     }
-    header h1 { margin: 0; font-size: 2.5em; }
-    header p { margin: 10px 0 0; font-size: 1.2em; }
+    #content {
+      display: none; /* 認証前は非表示 */
+    }
+    header {
+      background: #000;
+      text-align: center;
+      padding: 20px 0;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+    header p {
+      margin: 10px 0 0;
+      font-size: 1.2em;
+    }
     nav {
-      background: #fff;
+      background: #000;
       padding: 10px 0;
-      border-bottom: 2px solid #B300B3;
+      border-bottom: 2px solid #fff;
       text-align: center;
     }
     nav a {
       margin: 0 15px;
-      color: #B300B3;
       font-weight: bold;
       transition: color 0.3s ease;
     }
-    nav a:hover { color: #800080; }
-    .hero {
-      background: url('https://via.placeholder.com/1500x500') center center/cover no-repeat;
-      color: #fff;
-      padding: 100px 20px;
-      position: relative;
+    nav a:hover {
+      color: #ddd;
     }
+    .hero {
+      position: relative;
+      color: #fff;
+      text-align: center;
+      padding: 100px 20px;
+    }
+    /* 背景の暗幕 */
     .hero::after {
       content: "";
-      background: rgba(0,0,0,0.5);
       position: absolute;
       top: 0; bottom: 0; left: 0; right: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 1;
     }
-    /* ヒーロー内テキストを中央揃え */
     .hero-content {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       text-align: center;
     }
-    .hero h2 { font-size: 3em; margin: 0 0 20px; }
-    .hero p { font-size: 1.2em; margin: 0 0 40px; }
+    .hero h2 {
+      font-size: 3em;
+      margin: 0 0 20px;
+    }
+    .hero p {
+      font-size: 1.2em;
+      margin: 0 0 40px;
+    }
     section {
       padding: 60px 20px;
       text-align: center;
     }
-    section h2 {
-      color: #B300B3;
-      font-size: 2em;
-      margin-bottom: 20px;
-    }
     footer {
-      background: #333;
-      color: #fff;
+      background: #000;
       text-align: center;
       padding: 20px 0;
+      margin-top: 40px;
+      border-top: 1px solid #fff;
     }
+
     /* 火炎エフェクト用オーバーレイ */
     #fire-overlay {
       position: fixed;
@@ -79,12 +97,14 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 10000;
+      z-index: 9999;
       overflow: hidden;
       opacity: 0;
       transition: opacity 0.3s ease-in;
     }
-    #fire-overlay.active { opacity: 1; }
+    #fire-overlay.active {
+      opacity: 1;
+    }
     .flame {
       position: absolute;
       bottom: 0;
@@ -126,8 +146,8 @@
       } else {
         document.getElementById("content").style.display = "block";
       }
-      
-      // ナビゲーションリンククリック時：火炎エフェクトを起動してから遷移
+
+      // ナビゲーションリンク → 火炎エフェクト → ページ遷移
       var navLinks = document.querySelectorAll('nav a');
       navLinks.forEach(function(link) {
         link.addEventListener('click', function(e) {
@@ -138,12 +158,10 @@
           });
         });
       });
-      
+
       function triggerFireEffect(callback) {
         var fireOverlay = document.getElementById('fire-overlay');
-        fireOverlay.innerHTML = ""; // 既存の炎要素をクリア
-        
-        // 20個の炎要素をランダムな位置・サイズ・遅延で生成
+        fireOverlay.innerHTML = "";
         for (var i = 0; i < 20; i++) {
           var flame = document.createElement('div');
           flame.className = 'flame';
@@ -154,7 +172,7 @@
           fireOverlay.appendChild(flame);
         }
         fireOverlay.classList.add('active');
-        setTimeout(function(){
+        setTimeout(function() {
           callback();
         }, 1500);
       }
@@ -175,20 +193,25 @@
       <a href="blog.html">ブログ</a>
       <a href="contact.html">お問い合わせ</a>
     </nav>
+
+    <!-- Hero Section -->
     <div class="hero">
       <div class="hero-content">
         <h2>未来を切り拓く戦略立案</h2>
         <p>あなたのキャリアをワイバーンのように羽ばたかせる</p>
       </div>
     </div>
-    <section id="overview">
+
+    <section>
       <h2>ようこそワイバーンコンサルティングへ</h2>
       <p>私たちは、情熱と革新を武器にクライアントの成功をサポートするパートナーです。</p>
     </section>
+
     <footer>
       <p>&copy; 2025 ワイバーンコンサルティング. All Rights Reserved.</p>
     </footer>
   </div>
+  <!-- 火炎エフェクト用オーバーレイ -->
   <div id="fire-overlay"></div>
 </body>
 </html>
