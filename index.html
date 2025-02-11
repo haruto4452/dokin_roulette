@@ -13,26 +13,16 @@
       line-height: 1.6;
       overflow-x: hidden;
     }
-    a {
-      text-decoration: none;
-    }
-    #content {
-      display: none;
-    }
+    a { text-decoration: none; }
+    #content { display: none; }
     header {
       background: #B300B3;
       color: #fff;
       padding: 20px 0;
       text-align: center;
     }
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
-    }
-    header p {
-      margin: 10px 0 0;
-      font-size: 1.2em;
-    }
+    header h1 { margin: 0; font-size: 2.5em; }
+    header p { margin: 10px 0 0; font-size: 1.2em; }
     nav {
       background: #fff;
       padding: 10px 0;
@@ -45,13 +35,10 @@
       font-weight: bold;
       transition: color 0.3s ease;
     }
-    nav a:hover {
-      color: #800080;
-    }
+    nav a:hover { color: #800080; }
     .hero {
       background: url('https://via.placeholder.com/1500x500') center center/cover no-repeat;
       color: #fff;
-      text-align: center;
       padding: 100px 20px;
       position: relative;
     }
@@ -59,25 +46,16 @@
       content: "";
       background: rgba(0,0,0,0.5);
       position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      top: 0; bottom: 0; left: 0; right: 0;
     }
-    /* 修正：hero-content に中央揃えを追加 */
+    /* ヒーロー内テキストを中央揃え */
     .hero-content {
       position: relative;
       z-index: 1;
       text-align: center;
     }
-    .hero h2 {
-      font-size: 3em;
-      margin: 0 0 20px;
-    }
-    .hero p {
-      font-size: 1.2em;
-      margin: 0 0 40px;
-    }
+    .hero h2 { font-size: 3em; margin: 0 0 20px; }
+    .hero p { font-size: 1.2em; margin: 0 0 40px; }
     section {
       padding: 60px 20px;
       text-align: center;
@@ -93,20 +71,41 @@
       text-align: center;
       padding: 20px 0;
     }
-    /* 遷移用オーバーレイ */
-    #transition-overlay {
+    /* 火炎エフェクト用オーバーレイ */
+    #fire-overlay {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 0;
-      background: linear-gradient(to top, #ff4500, #ffa500, #ffff00);
-      z-index: 10000;
-      pointer-events: none;
-      transition: height 1.5s ease-in;
-    }
-    #transition-overlay.active {
       height: 100%;
+      pointer-events: none;
+      z-index: 10000;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease-in;
+    }
+    #fire-overlay.active { opacity: 1; }
+    .flame {
+      position: absolute;
+      bottom: 0;
+      background: radial-gradient(ellipse at center, rgba(255,200,0,1) 0%, rgba(255,0,0,0.8) 60%, rgba(0,0,0,0) 100%);
+      filter: blur(2px);
+      mix-blend-mode: screen;
+      animation: flameAnim 1.5s linear forwards;
+    }
+    @keyframes flameAnim {
+      0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 1;
+      }
+      50% {
+        transform: translateY(-50vh) scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1.5);
+        opacity: 0;
+      }
     }
   </style>
   <script>
@@ -128,18 +127,37 @@
         document.getElementById("content").style.display = "block";
       }
       
-      // 遷移エフェクト用：ナビゲーションリンククリック時にオーバーレイを表示して遷移
+      // ナビゲーションリンククリック時：火炎エフェクトを起動してから遷移
       var navLinks = document.querySelectorAll('nav a');
       navLinks.forEach(function(link) {
         link.addEventListener('click', function(e) {
           e.preventDefault();
           var target = this.getAttribute('href');
-          document.getElementById('transition-overlay').classList.add('active');
-          setTimeout(function() {
+          triggerFireEffect(function() {
             window.location.href = target;
-          }, 1500);
+          });
         });
       });
+      
+      function triggerFireEffect(callback) {
+        var fireOverlay = document.getElementById('fire-overlay');
+        fireOverlay.innerHTML = ""; // 既存の炎要素をクリア
+        
+        // 20個の炎要素をランダムな位置・サイズ・遅延で生成
+        for (var i = 0; i < 20; i++) {
+          var flame = document.createElement('div');
+          flame.className = 'flame';
+          flame.style.left = Math.random() * 100 + "%";
+          flame.style.width = (30 + Math.random()*40) + "px";
+          flame.style.height = (30 + Math.random()*40) + "px";
+          flame.style.animationDelay = (Math.random() * 0.5) + "s";
+          fireOverlay.appendChild(flame);
+        }
+        fireOverlay.classList.add('active');
+        setTimeout(function(){
+          callback();
+        }, 1500);
+      }
     });
   </script>
 </head>
@@ -171,7 +189,6 @@
       <p>&copy; 2025 ワイバーンコンサルティング. All Rights Reserved.</p>
     </footer>
   </div>
-  <!-- 遷移エフェクト用オーバーレイ -->
-  <div id="transition-overlay"></div>
+  <div id="fire-overlay"></div>
 </body>
 </html>
