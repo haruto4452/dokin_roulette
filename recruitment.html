@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ワイバーンコンサルティング | 採用情報</title>
+  <style>
+    /* 共通スタイル */
+    body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; line-height: 1.6; }
+    a { text-decoration: none; }
+    #content { display: none; }
+    header { background: #B300B3; color: #fff; padding: 20px 0; text-align: center; }
+    header h1 { margin: 0; font-size: 2.5em; }
+    header p { margin: 10px 0 0; font-size: 1.2em; }
+    nav { background: #fff; padding: 10px 0; border-bottom: 2px solid #B300B3; text-align: center; }
+    nav a { margin: 0 15px; color: #B300B3; font-weight: bold; transition: color 0.3s ease; }
+    nav a:hover { color: #800080; }
+    section { padding: 60px 20px; text-align: center; }
+    section h2 { color: #B300B3; font-size: 2em; margin-bottom: 20px; }
+    footer { background: #333; color: #fff; text-align: center; padding: 20px 0; }
+  </style>
+  <script>
+    // パスワード認証スクリプト
+    document.addEventListener("DOMContentLoaded", function(){
+      var password = "urata";
+      var auth = sessionStorage.getItem("authenticated");
+      if (!auth) {
+        var userPassword = prompt("このサイトにアクセスするにはパスワードを入力してください");
+        if (userPassword === password) {
+          sessionStorage.setItem("authenticated", "true");
+          document.getElementById("content").style.display = "block";
+        } else {
+          alert("パスワードが違います。アクセスできません。");
+          document.body.innerHTML = "<h1>アクセス拒否</h1>";
+        }
+      } else {
+        document.getElementById("content").style.display = "block";
+      }
+    });
+  </script>
+</head>
+<body>
+  <div id="content">
+    <!-- ヘッダー -->
+    <header>
+      <h1>ワイバーンコンサルティング</h1>
+      <p>社員がドラゴンのように飛び立つキャリア構築の伴走者</p>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+      <a href="index.html">ホーム</a>
+      <a href="services.html">サービス紹介</a>
+      <a href="company.html">会社概要</a>
+      <a href="recruitment.html">採用情報</a>
+      <a href="blog.html">ブログ</a>
+      <a href="contact.html">お問い合わせ</a>
+    </nav>
+
+    <!-- 採用情報専用コンテンツ -->
+    <section id="recruitment">
+      <h2>採用情報</h2>
+      <p>私たちと一緒に、ワイバーンのように高く飛び立つ仲間を募集しています。情熱と才能を持った皆さんの応募をお待ちしています。</p>
+      <p>募集職種、応募方法、応募フォームなどの情報をここに記載します。</p>
+    </section>
+
+    <!-- フッター -->
+    <footer>
+      <p>&copy; 2025 ワイバーンコンサルティング. All Rights Reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>
