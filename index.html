@@ -15,9 +15,13 @@
     a {
       text-decoration: none;
     }
+    /* コンテンツを認証前は非表示にする */
+    #content {
+      display: none;
+    }
     /* Header */
     header {
-      background: #b30000;
+      background: #B300B3; /* 赤紫 */
       color: #fff;
       padding: 20px 0;
       text-align: center;
@@ -34,17 +38,17 @@
     nav {
       background: #fff;
       padding: 10px 0;
-      border-bottom: 2px solid #b30000;
+      border-bottom: 2px solid #B300B3;
       text-align: center;
     }
     nav a {
       margin: 0 15px;
-      color: #b30000;
+      color: #B300B3;
       font-weight: bold;
       transition: color 0.3s ease;
     }
     nav a:hover {
-      color: #800000;
+      color: #800080;
     }
     /* Hero Section */
     .hero {
@@ -81,7 +85,7 @@
       text-align: center;
     }
     section h2 {
-      color: #b30000;
+      color: #B300B3;
       font-size: 2em;
       margin-bottom: 20px;
     }
@@ -114,7 +118,7 @@
       border-radius: 3px;
     }
     .contact button {
-      background: #b30000;
+      background: #B300B3;
       color: #fff;
       border: none;
       padding: 10px 20px;
@@ -130,90 +134,109 @@
       padding: 20px 0;
     }
   </style>
+  <script>
+    // ページ読み込み時にパスワード認証を行う
+    document.addEventListener("DOMContentLoaded", function(){
+      var password = "urata";
+      var auth = sessionStorage.getItem("authenticated");
+      if (!auth) {
+        var userPassword = prompt("このサイトにアクセスするにはパスワードを入力してください");
+        if (userPassword === password) {
+          sessionStorage.setItem("authenticated", "true");
+          document.getElementById("content").style.display = "block";
+        } else {
+          alert("パスワードが違います。アクセスできません。");
+          document.body.innerHTML = "<h1>アクセス拒否</h1>";
+        }
+      } else {
+        document.getElementById("content").style.display = "block";
+      }
+    });
+  </script>
 </head>
 <body>
+  <div id="content">
+    <!-- Header -->
+    <header>
+      <h1>ワイバーンコンサルティング</h1>
+      <p>社員がドラゴンのように飛び立つキャリア構築の伴走者</p>
+    </header>
 
-  <!-- Header -->
-  <header>
-    <h1>ワイバーンコンサルティング</h1>
-    <p>社員がワイバーンのように飛び立つキャリア構築の伴走者</p>
-  </header>
+    <!-- Navigation -->
+    <nav>
+      <a href="#home">ホーム</a>
+      <a href="#services">サービス紹介</a>
+      <a href="#company">会社概要</a>
+      <a href="#recruitment">採用情報</a>
+      <a href="#blog">ブログ</a>
+      <a href="#contact">お問い合わせ</a>
+    </nav>
 
-  <!-- Navigation -->
-  <nav>
-    <a href="#home">ホーム</a>
-    <a href="#services">サービス紹介</a>
-    <a href="#company">会社概要</a>
-    <a href="#recruitment">採用情報</a>
-    <a href="#blog">ブログ</a>
-    <a href="#contact">お問い合わせ</a>
-  </nav>
-
-  <!-- Hero Section -->
-  <div class="hero" id="home">
-    <div class="hero-content">
-      <h2>未来を切り拓く戦略立案</h2>
-      <p>あなたのキャリアをワイバーンのように羽ばたかせる</p>
+    <!-- Hero Section -->
+    <div class="hero" id="home">
+      <div class="hero-content">
+        <h2>未来を切り拓く戦略立案</h2>
+        <p>あなたのキャリアをワイバーンのように羽ばたかせる</p>
+      </div>
     </div>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+      <h2>サービス紹介</h2>
+      <div class="service-item">
+        <h3>戦略立案</h3>
+        <p>私たちは、企業の未来を見据えた戦略立案に特化しています。革新的なアイデアと実行力で、クライアントの成長をサポートします。</p>
+      </div>
+    </section>
+
+    <!-- Company Overview -->
+    <section id="company" class="company">
+      <h2>会社概要</h2>
+      <p>ワイバーンコンサルティングは、情熱と革新を武器に、クライアントのビジネスを成功に導くパートナーです。</p>
+      <p>所在地、設立年、代表者などの基本情報をここに記載します。</p>
+    </section>
+
+    <!-- Recruitment Section -->
+    <section id="recruitment" class="recruitment">
+      <h2>採用情報</h2>
+      <p>私たちと一緒に、ワイバーンのように高く飛び立つ仲間を募集しています。情熱と才能を持った皆さんの応募をお待ちしています。</p>
+      <p>募集職種、応募方法、応募フォームなどの情報をここに記載します。</p>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="blog">
+      <h2>ブログ</h2>
+      <div class="blog-item">
+        <h3>最新記事タイトル</h3>
+        <p>最新の業界トレンドや戦略に関する記事をお届けします。</p>
+      </div>
+      <div class="blog-item">
+        <h3>過去記事タイトル</h3>
+        <p>過去の記事も合わせてご覧ください。</p>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+      <h2>お問い合わせ</h2>
+      <form>
+        <label for="name">お名前</label>
+        <input type="text" id="name" name="name" placeholder="お名前を入力">
+
+        <label for="email">メールアドレス</label>
+        <input type="email" id="email" name="email" placeholder="メールアドレスを入力">
+
+        <label for="message">お問い合わせ内容</label>
+        <textarea id="message" name="message" rows="5" placeholder="お問い合わせ内容を入力"></textarea>
+
+        <button type="submit">送信</button>
+      </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2025 ワイバーンコンサルティング. All Rights Reserved.</p>
+    </footer>
   </div>
-
-  <!-- Services Section -->
-  <section id="services" class="services">
-    <h2>サービス紹介</h2>
-    <div class="service-item">
-      <h3>戦略立案</h3>
-      <p>私たちは、企業の未来を見据えた戦略立案に特化しています。革新的なアイデアと実行力で、クライアントの成長をサポートします。</p>
-    </div>
-  </section>
-
-  <!-- Company Overview -->
-  <section id="company" class="company">
-    <h2>会社概要</h2>
-    <p>ワイバーンコンサルティングは、情熱と革新を武器に、クライアントのビジネスを成功に導くパートナーです。</p>
-    <p>所在地、設立年、代表者などの基本情報をここに記載します。</p>
-  </section>
-
-  <!-- Recruitment Section -->
-  <section id="recruitment" class="recruitment">
-    <h2>採用情報</h2>
-    <p>私たちと一緒に、ワイバーンのように高く飛び立つ仲間を募集しています。情熱と才能を持った皆さんの応募をお待ちしています。</p>
-    <p>募集職種、応募方法、応募フォームなどの情報をここに記載します。</p>
-  </section>
-
-  <!-- Blog Section -->
-  <section id="blog" class="blog">
-    <h2>ブログ</h2>
-    <div class="blog-item">
-      <h3>最新記事タイトル</h3>
-      <p>最新の業界トレンドや戦略に関する記事をお届けします。</p>
-    </div>
-    <div class="blog-item">
-      <h3>過去記事タイトル</h3>
-      <p>過去の記事も合わせてご覧ください。</p>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="contact">
-    <h2>お問い合わせ</h2>
-    <form>
-      <label for="name">お名前</label>
-      <input type="text" id="name" name="name" placeholder="お名前を入力">
-
-      <label for="email">メールアドレス</label>
-      <input type="email" id="email" name="email" placeholder="メールアドレスを入力">
-
-      <label for="message">お問い合わせ内容</label>
-      <textarea id="message" name="message" rows="5" placeholder="お問い合わせ内容を入力"></textarea>
-
-      <button type="submit">送信</button>
-    </form>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 ワイバーンコンサルティング. All Rights Reserved.</p>
-  </footer>
-
 </body>
 </html>
