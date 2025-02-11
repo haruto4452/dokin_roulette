@@ -64,6 +64,23 @@
         document.getElementById("content").style.display = "block";
       }
     });
+
+      // ========= ナビゲーションのリンククリック時にエフェクトを付与 =========
+      // 全ての nav 内のリンクに対して処理を追加
+      var navLinks = document.querySelectorAll('nav a');
+      navLinks.forEach(function(link) {
+        link.addEventListener('click', function(e){
+          e.preventDefault(); // 通常のリンク動作をキャンセル
+          var targetUrl = this.getAttribute('href');
+          // オーバーレイに animate-fire クラスを追加してエフェクト開始
+          document.getElementById('transition-overlay').classList.add('animate-fire');
+          // 1.5秒後に指定のURLへ遷移
+          setTimeout(function(){
+            window.location.href = targetUrl;
+          }, 1500);
+        });
+      });
+    });
   </script>
 </head>
 <body>
