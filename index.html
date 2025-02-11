@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ワイバーンコンサルティング | ホーム</title>
   <style>
-    /* 共通スタイル */
+    /* ========= 共通スタイル ========= */
     body {
       margin: 0;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -38,29 +38,16 @@
       transition: color 0.3s ease;
     }
     nav a:hover { color: #800080; }
-    /* Hero Section */
-    .hero {
-      background: url('https://via.placeholder.com/1500x500') center center/cover no-repeat;
-      color: #fff;
-      text-align: center;
-      padding: 100px 20px;
-      position: relative;
-    }
-    .hero::after {
-      content: "";
-      background: rgba(0,0,0,0.5);
-      position: absolute;
-      top: 0; bottom: 0; left: 0; right: 0;
-    }
-    .hero-content { position: relative; z-index: 1; }
-    .hero h2 { font-size: 3em; margin: 0 0 20px; }
-    .hero p { font-size: 1.2em; margin: 0 0 40px; }
     /* セクション */
     section {
       padding: 60px 20px;
       text-align: center;
     }
-    section h2 { color: #B300B3; font-size: 2em; margin-bottom: 20px; }
+    section h2 {
+      color: #B300B3;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
     /* フッター */
     footer {
       background: #333;
@@ -68,9 +55,28 @@
       text-align: center;
       padding: 20px 0;
     }
+    
+    /* ========= 遷移エフェクト用スタイル ========= */
+    /* 画面全体を覆うオーバーレイ（初期は高さ0） */
+    #transition-overlay {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0%;
+      /* 炎をイメージしたグラデーション（必要に応じて調整してください） */
+      background: linear-gradient(to top, #ff6600, #ff0000, #990000);
+      z-index: 10000;
+      pointer-events: none;  /* クリックをブロックしない */
+      transition: height 1.5s ease;
+    }
+    /* animate-fire クラスが付くと高さが100%に */
+    #transition-overlay.animate-fire {
+      height: 100%;
+    }
   </style>
   <script>
-    // パスワード認証用スクリプト（すべてのページ共通）
+    // パスワード認証スクリプト（各ページ共通）
     document.addEventListener("DOMContentLoaded", function(){
       var password = "urata";
       var auth = sessionStorage.getItem("authenticated");
@@ -86,17 +92,34 @@
       } else {
         document.getElementById("content").style.display = "block";
       }
+      
+      // ========= ナビゲーションのリンククリック時にエフェクトを付与 =========
+      // 全ての nav 内のリンクに対して処理を追加
+      var navLinks = document.querySelectorAll('nav a');
+      navLinks.forEach(function(link) {
+        link.addEventListener('click', function(e){
+          e.preventDefault(); // 通常のリンク動作をキャンセル
+          var targetUrl = this.getAttribute('href');
+          // オーバーレイに animate-fire クラスを追加してエフェクト開始
+          document.getElementById('transition-overlay').classList.add('animate-fire');
+          // 1.5秒後に指定のURLへ遷移
+          setTimeout(function(){
+            window.location.href = targetUrl;
+          }, 1500);
+        });
+      });
     });
   </script>
 </head>
 <body>
+  <!-- メインコンテンツ（パスワード認証済みの場合のみ表示） -->
   <div id="content">
     <!-- ヘッダー -->
     <header>
       <h1>ワイバーンコンサルティング</h1>
       <p>社員がドラゴンのように飛び立つキャリア構築の伴走者</p>
     </header>
-
+    
     <!-- ナビゲーション -->
     <nav>
       <a href="index.html">ホーム</a>
@@ -106,25 +129,27 @@
       <a href="blog.html">ブログ</a>
       <a href="contact.html">お問い合わせ</a>
     </nav>
-
-    <!-- Hero Section -->
+    
+    <!-- ホーム専用コンテンツ -->
     <div class="hero">
       <div class="hero-content">
         <h2>未来を切り拓く戦略立案</h2>
         <p>あなたのキャリアをワイバーンのように羽ばたかせる</p>
       </div>
     </div>
-
-    <!-- ホーム専用コンテンツ -->
+    
     <section id="overview">
       <h2>ようこそワイバーンコンサルティングへ</h2>
       <p>私たちは、情熱と革新を武器にクライアントの成功をサポートするパートナーです。</p>
     </section>
-
+    
     <!-- フッター -->
     <footer>
       <p>&copy; 2025 ワイバーンコンサルティング. All Rights Reserved.</p>
     </footer>
   </div>
+  
+  <!-- 遷移エフェクト用オーバーレイ -->
+  <div id="transition-overlay"></div>
 </body>
 </html>
