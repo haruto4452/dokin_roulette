@@ -56,24 +56,6 @@
       padding: 20px 0;
     }
     
-    /* ========= 遷移エフェクト用スタイル ========= */
-    /* 画面全体を覆うオーバーレイ（初期は高さ0） */
-    #transition-overlay {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 0%;
-      /* 炎をイメージしたグラデーション（必要に応じて調整してください） */
-      background: linear-gradient(to top, #ff6600, #ff0000, #990000);
-      z-index: 10000;
-      pointer-events: none;  /* クリックをブロックしない */
-      transition: height 1.5s ease;
-    }
-    /* animate-fire クラスが付くと高さが100%に */
-    #transition-overlay.animate-fire {
-      height: 100%;
-    }
   </style>
   <script>
     // パスワード認証スクリプト（各ページ共通）
@@ -93,23 +75,7 @@
         document.getElementById("content").style.display = "block";
       }
       
-      // ========= ナビゲーションのリンククリック時にエフェクトを付与 =========
-      // 全ての nav 内のリンクに対して処理を追加
-      var navLinks = document.querySelectorAll('nav a');
-      navLinks.forEach(function(link) {
-        link.addEventListener('click', function(e){
-          e.preventDefault(); // 通常のリンク動作をキャンセル
-          var targetUrl = this.getAttribute('href');
-          // オーバーレイに animate-fire クラスを追加してエフェクト開始
-          document.getElementById('transition-overlay').classList.add('animate-fire');
-          // 1.5秒後に指定のURLへ遷移
-          setTimeout(function(){
-            window.location.href = targetUrl;
-          }, 1500);
-        });
-      });
-    });
-  </script>
+   </script>
 </head>
 <body>
   <!-- メインコンテンツ（パスワード認証済みの場合のみ表示） -->
