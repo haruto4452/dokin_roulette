@@ -3,34 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ワイバーンコンサルティング | 採用情報</title>
+  <title>ワイバーンコンサルティング | 会社概要</title>
   <style>
-    /* 共通スタイル */
-    body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; line-height: 1.6; overflow-x: hidden; }
+    /* 共通スタイル（index.htmlと同様） */
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      color: #333;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
     a { text-decoration: none; }
     #content { display: none; }
-    header { background: #B300B3; color: #fff; padding: 20px 0; text-align: center; }
+    header {
+      background: #B300B3;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+    }
     header h1 { margin: 0; font-size: 2.5em; }
     header p { margin: 10px 0 0; font-size: 1.2em; }
-    nav { background: #fff; padding: 10px 0; border-bottom: 2px solid #B300B3; text-align: center; }
-    nav a { margin: 0 15px; color: #B300B3; font-weight: bold; transition: color 0.3s ease; }
+    nav {
+      background: #fff;
+      padding: 10px 0;
+      border-bottom: 2px solid #B300B3;
+      text-align: center;
+    }
+    nav a {
+      margin: 0 15px;
+      color: #B300B3;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
     nav a:hover { color: #800080; }
-    section { padding: 60px 20px; text-align: center; }
-    section h2 { color: #B300B3; font-size: 2em; margin-bottom: 20px; }
-    footer { background: #333; color: #fff; text-align: center; padding: 20px 0; }
-    /* 遷移エフェクト用オーバーレイ */
-    #transition-overlay {
+    section {
+      padding: 60px 20px;
+      text-align: center;
+    }
+    section h2 {
+      color: #B300B3;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px 0;
+    }
+    /* 火炎エフェクト */
+    #fire-overlay {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 0;
-      background: linear-gradient(to top, #ff4500, #ffa500, #ffff00);
-      z-index: 10000;
+      height: 100%;
       pointer-events: none;
-      transition: height 1.5s ease-in;
+      z-index: 10000;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease-in;
     }
-    #transition-overlay.active { height: 100%; }
+    #fire-overlay.active { opacity: 1; }
+    .flame {
+      position: absolute;
+      bottom: 0;
+      background: radial-gradient(ellipse at center, rgba(255,200,0,1) 0%, rgba(255,0,0,0.8) 60%, rgba(0,0,0,0) 100%);
+      filter: blur(2px);
+      mix-blend-mode: screen;
+      animation: flameAnim 1.5s linear forwards;
+    }
+    @keyframes flameAnim {
+      0% { transform: translateY(0) scale(0.5); opacity: 1; }
+      50% { transform: translateY(-50vh) scale(1); opacity: 0.8; }
+      100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+    }
   </style>
   <script>
     document.addEventListener("DOMContentLoaded", function(){
@@ -54,12 +101,26 @@
         link.addEventListener('click', function(e) {
           e.preventDefault();
           var target = this.getAttribute('href');
-          document.getElementById('transition-overlay').classList.add('active');
-          setTimeout(function() {
+          triggerFireEffect(function() {
             window.location.href = target;
-          }, 1500);
+          });
         });
       });
+      function triggerFireEffect(callback) {
+        var fireOverlay = document.getElementById('fire-overlay');
+        fireOverlay.innerHTML = "";
+        for (var i = 0; i < 20; i++) {
+          var flame = document.createElement('div');
+          flame.className = 'flame';
+          flame.style.left = Math.random() * 100 + "%";
+          flame.style.width = (30 + Math.random()*40) + "px";
+          flame.style.height = (30 + Math.random()*40) + "px";
+          flame.style.animationDelay = (Math.random() * 0.5) + "s";
+          fireOverlay.appendChild(flame);
+        }
+        fireOverlay.classList.add('active');
+        setTimeout(function(){ callback(); }, 1500);
+      }
     });
   </script>
 </head>
@@ -77,15 +138,15 @@
       <a href="blog.html">ブログ</a>
       <a href="contact.html">お問い合わせ</a>
     </nav>
-    <section id="recruitment">
-      <h2>採用情報</h2>
-      <p>私たちと一緒に、ワイバーンのように高く飛び立つ仲間を募集しています。情熱と才能を持った皆さんの応募をお待ちしています。</p>
-      <p>募集職種、応募方法、応募フォームなどの情報をここに記載します。</p>
+    <section id="company">
+      <h2>会社概要</h2>
+      <p>ワイバーンコンサルティングは、情熱と革新を武器に、クライアントのビジネスを成功に導くパートナーです。</p>
+      <p>所在地、設立年、代表者などの基本情報をここに記載します。</p>
     </section>
     <footer>
       <p>&copy; 2025 ワイバーンコンサルティング. All Rights Reserved.</p>
     </footer>
   </div>
-  <div id="transition-overlay"></div>
+  <div id="fire-overlay"></div>
 </body>
 </html>
