@@ -3,64 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
   <title>銅金とルーレット</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <button id="spinButton">回す</button>
-    <div id="result" class="result">銅金と？</div>
-    <div id="animation" class="animation"></div>
+  <div class="roulette-container">
+    <div class="roulette-frame">
+      <div id="result" class="roulette-result">銅金と？</div>
+      <button id="spinButton" class="spin-button">回す</button>
+      <div id="animation" class="roulette-animation"></div>
+    </div>
   </div>
-  <script>
-    const spinButton = document.getElementById('spinButton');
-    const resultDiv = document.getElementById('result');
-    const animationDiv = document.getElementById('animation');
-
-    function spinRoulette(options, probabilities) {
-      const rnd = Math.random();
-      let acc = 0;
-      for (let i = 0; i < options.length; i++) {
-        acc += probabilities[i];
-        if (rnd < acc) return options[i];
-      }
-      return options[options.length - 1];
-    }
-
-    function playAnimation(type) {
-      animationDiv.innerHTML = '';
-      if (type === 'hit') {
-        animationDiv.textContent = '🎉 当たり！';
-        animationDiv.classList.add('hit');
-      } else if (type === 'rush') {
-        animationDiv.textContent = '💥 RUSH突入！';
-        animationDiv.classList.add('rush');
-      }
-      setTimeout(() => {
-        animationDiv.classList.remove('hit', 'rush');
-        animationDiv.textContent = '';
-      }, 2000);
-    }
-
-    spinButton.addEventListener('click', () => {
-      // 初回ルーレット
-      const outcome = spinRoulette(['申します', '申さず'], [0.1, 0.9]);
-      resultDiv.textContent = `銅金と${outcome}`;
-      if (outcome === '申します') {
-        playAnimation('hit');
-        // RUSH判定
-        const rush = spinRoulette([true, false], [1/30, 29/30]);
-        if (rush) {
-          playAnimation('rush');
-          // RUSHモード
-          const rushOutcome = spinRoulette(['申します', '申さず'], [0.5, 0.5]);
-          resultDiv.textContent = `銅金と${rushOutcome}`;
-          if (rushOutcome === '申します') {
-            playAnimation('hit');
-          }
-        }
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
