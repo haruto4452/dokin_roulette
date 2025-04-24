@@ -1,10 +1,10 @@
-/* --- ベース設定 --- */
 html, body {
   margin: 0; padding: 0;
   width: 100%; height: 100%;
   background: radial-gradient(circle at center, #111 0%, #000 90%);
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden; font-family: 'Arial Black', sans-serif; color: #fff;
+  display: flex; justify-content: center; align-items: center;
+  overflow: hidden;
+  font-family: 'Arial Black', sans-serif; color: #fff;
   position: relative;
 }
 body::before {
@@ -16,26 +16,21 @@ body::before {
   z-index: 0;
 }
 @keyframes bgPulse {
-  0%,100% { opacity: .2; }
-  50%     { opacity: .6; }
+  0%,100% { opacity: 0.2; }
+  50%     { opacity: 0.6; }
 }
 
-/* --- UI --- */
 .roulette-container {
   position: relative; z-index: 1; text-align: center;
 }
-.main-text {
-  font-size: 4rem; text-shadow: 0 0 20px #ffd700;
-}
-.toggle-text {
-  font-size: 5rem; margin-top: .2em; min-height: 1.2em;
-}
-.spin-button {
+.main-text  { font-size: 4rem; text-shadow: 0 0 20px #ffd700; }
+.toggle-text{ font-size: 5rem; margin-top: .2em; min-height: 1.2em; }
+.spin-button{
   margin-top: 2rem; padding: 15px 50px;
   font-size: 1.4rem; font-weight: bold;
   background: radial-gradient(circle at top left, #ffd700, #ffb700);
   border: 2px solid #ffcc00; border-radius: 12px;
-  box-shadow: 0 6px 0 #cc9900, 0 0 30px rgba(255,204,0,.8);
+  box-shadow: 0 6px 0 #cc9900, 0 0 30px rgba(255,204,0,0.8);
   color: #111; cursor: pointer; transition: transform .1s;
 }
 .spin-button:active {
@@ -43,40 +38,46 @@ body::before {
   box-shadow: 0 0 15px #cc9900;
 }
 
-/* --- コンフェティ Canvas --- */
-#confetti-canvas {
-  position: absolute; top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none; z-index: 0;
-}
-
-/* --- 残念演出 --- */
-.sad-overlay {
+/* 残念オーバーレイ */
+.sad-overlay{
   position: fixed; inset: 0;
   display: flex; align-items: center; justify-content: center;
   font-size: 6rem; color: #ccc;
   text-shadow: 0 0 15px #000;
-  background: rgba(0,0,0,.7);
+  background: rgba(0,0,0,0.7);
   opacity: 0; pointer-events: none; z-index: 2;
 }
 @keyframes sadShow {
-  0%   { opacity: 0; transform: scale(.5) rotate(0); }
+  0%   { opacity: 0; transform: scale(.5) rotate(0deg); }
   60%  { opacity: 1; transform: scale(1.05) rotate(2deg); }
-  100% { opacity: 0; transform: scale(1) rotate(0); }
+  100% { opacity: 0; transform: scale(1) rotate(0deg); }
 }
 
-/* --- ラッシュ演出 --- */
-.rush-overlay {
+/* サークル表示 */
+.circle-container{
+  position: fixed; bottom: 20px; right: 20px;
+  display: flex; gap: 10px; z-index: 1;
+}
+.circle{
+  width: 20px; height: 20px;
+  border-radius: 50%; background: #fff;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  transition: background .3s;
+}
+.circle.active{
+  background: #ffcc00;
+}
+
+/* 銅金達成オーバーレイ */
+.toukkin-overlay{
   position: fixed; inset: 0;
   display: flex; align-items: center; justify-content: center;
-  font-size: 6rem; color: #ff00ff;
-  text-shadow: 0 0 30px #ff00ff, 0 0 60px #ff00ff;
-  background: rgba(255,255,255,0.3);
-  opacity: 0; pointer-events: none; z-index: 2;
+  font-size: 6rem; color: #ffff66;
+  text-shadow: 0 0 30px #ff0;
+  background: rgba(0,0,0,0.8);
+  opacity: 0; pointer-events: none; z-index: 3;
 }
-@keyframes rushShow {
-  0%   { opacity: 0; transform: scale(0.5) rotate(0); }
-  30%  { opacity: 1; transform: scale(1.5) rotate(10deg); }
-  60%  { transform: scale(1.2) rotate(-10deg); }
-  100% { opacity: 0; transform: scale(1) rotate(0); }
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0; }
 }
