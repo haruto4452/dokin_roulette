@@ -1,75 +1,89 @@
-/* ベース設定 */
+/* === ベース設定 ============================================== */
 html, body {
   margin: 0;
   padding: 0;
-  width: 100%; height: 100%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #111 0%, #000 90%);
   display: flex;
-  justify-content: center;
   align-items: center;
-  background: radial-gradient(circle at center, #111 0%, #000 80%);
+  justify-content: center;
+  overflow: hidden;
   font-family: 'Arial Black', sans-serif;
   color: #fff;
-  overflow: hidden;
-  position: relative;
 }
 
-/* 背景パルス */
 body::before {
   content: "";
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: radial-gradient(circle at center, rgba(255,0,0,0.2), transparent 70%);
+  width: 200%; height: 200%;
+  top: -50%; left: -50%;
+  background: radial-gradient(circle at center, rgba(255,0,0,0.15), transparent 70%);
   animation: bgPulse 4s ease-in-out infinite;
   z-index: 0;
 }
+
 @keyframes bgPulse {
-  0%,100% { opacity: 0.2; }
-  50% { opacity: 0.5; }
+  0%,100% { opacity: .2; }
+  50%     { opacity: .6; }
 }
 
+/* === UI ====================================================== */
 .roulette-container {
   position: relative;
   z-index: 1;
   text-align: center;
 }
 
-.message {
-  text-shadow: 0 0 20px #ffcc00;
-}
-.main-text {
-  font-size: 3rem;
-}
-.toggle-text {
-  font-size: 4rem;
-  margin-top: 0.5em;
-  min-height: 1.2em;
-  transition: opacity 0.2s;
-}
+.main-text  { font-size: 4rem; text-shadow: 0 0 20px #ffd700; }
+.toggle-text{ font-size: 5rem; margin-top: .2em; min-height: 1.2em; }
 
-.spin-button {
-  margin-top: 2em;
-  padding: 15px 40px;
-  font-size: 1.2rem;
+.spin-button{
+  margin-top: 2rem;
+  padding: 15px 50px;
+  font-size: 1.4rem;
   font-weight: bold;
-  background: radial-gradient(circle at top left, #ffcc00, #ffaa00);
-  border: none;
-  border-radius: 8px;
-  box-shadow: 0 6px 0 #cc9900, 0 0 20px rgba(255,204,0,0.7);
+  background: radial-gradient(circle at top left, #ffd700, #ffb700);
+  border: 2px solid #ffcc00;
+  border-radius: 12px;
+  box-shadow: 0 6px 0 #cc9900, 0 0 30px rgba(255,204,0,.8);
   color: #111;
   cursor: pointer;
-  transition: transform 0.1s;
+  transition: transform .1s;
 }
-.spin-button:active {
+.spin-button:active{
   transform: translateY(6px);
-  box-shadow: 0 0 10px #cc9900;
+  box-shadow: 0 0 15px #cc9900;
 }
 
-/* コンフェティキャンバス */
-#confetti-canvas {
+/* === コンフェティ Canvas ===================================== */
+#confetti-canvas{
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top:0; left:0;
+  width:100%; height:100%;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* === 残念オーバーレイ ======================================== */
+.sad-overlay{
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6rem;
+  color: #ccc;
+  text-shadow: 0 0 15px #000;
+  background: rgba(0,0,0,.7);
+  opacity: 0;
   pointer-events: none;
-  z-index: 0;
+  z-index: 2;
+}
+
+/* フェードインしながら軽く揺れる */
+@keyframes sadShow {
+  0%   { opacity: 0; transform: scale(.5) rotate(0deg); }
+  60%  { opacity: 1; transform: scale(1.05) rotate(2deg); }
+  100% { opacity: 0; transform: scale(1)   rotate(0deg); }
 }
