@@ -15,7 +15,7 @@ function spinText(duration = 3000, interval = 100) {
     setTimeout(() => {
       clearInterval(timer);
       // 確率判定
-      const outcome = Math.random() < 0.1 ? '申します' : '申さず';
+      const outcome = Math.random() < (1/3) ? '申します' : '申さず';
       toggleText.textContent = outcome;
       resolve(outcome);
     }, duration);
