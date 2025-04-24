@@ -1,18 +1,17 @@
 window.addEventListener('DOMContentLoaded', () => {
-  const spinButton   = document.getElementById('spinButton');
-  const toggleText   = document.getElementById('toggle-text');
-  const sadOverlay   = document.getElementById('sadOverlay');
-  const toukkinOverlay = document.getElementById('toukkinOverlay');
-  const confCanvas   = document.getElementById('confetti-canvas');
-  const circles      = document.querySelectorAll('.circle');
-  let litCount = 0;
+  const spinButton    = document.getElementById('spinButton');
+  const toggleText    = document.getElementById('toggle-text');
+  const sadOverlay    = document.getElementById('sadOverlay');
+  const confCanvas    = document.getElementById('confetti-canvas');
 
+  // confetti ライブラリが使えなければ no-op
   let confetti = () => {};
   if (window.confetti && window.confetti.create) {
-    confetti = window.confetti.create(confCanvas, { resize:true, useWorker:true });
+    confetti = window.confetti.create(confCanvas, { resize: true, useWorker: true });
   }
 
   spinButton.addEventListener('click', startSpin);
+
   const delay = ms => new Promise(res => setTimeout(res, ms));
 
   async function startSpin() {
@@ -22,38 +21,25 @@ window.addEventListener('DOMContentLoaded', () => {
     const duration = 3000;
     const loops    = duration / interval;
 
-    // 3秒間交互表示
+    // 3秒間、交互に点滅
     for (let i = 0; i < loops; i++) {
       toggleText.textContent = flag ? '申さず' : '申します';
       flag = !flag;
       await delay(interval);
     }
 
-    // 最終判定: 1/3で当たり
-    const outcome = Math.random() < (1/3) ? '申します' : '申さず';
+    // 確定判定：1/3で「申します」
+    const outcome = Math.random() < (1 / 3) ? '申します' : '申さず';
     toggleText.textContent = outcome;
 
     if (outcome === '申します') {
-      // コンフェティ
-      for (let i = 0; i < 250; i++) {
-        confetti({ particleCount: 6 + Math.floor(Math.random()*8), spread: 70, origin:{ y: .6 } });
-      }
-      // サークル点灯
-      if (litCount < circles.length) {
-        circles[litCount].classList.add('active');
-        litCount++;
-      }
-      // 全点灯達成
-      if (litCount >= circles.length) {
-        // 銅金演出
-        toukkinOverlay.style.opacity = '1';
-        toukkinOverlay.style.animation = 'blink 0.5s ease-in-out infinite';
-        await delay(3000);
-        toukkinOverlay.style.animation = '';
-        toukkinOverlay.style.opacity = '0';
-        // リセット
-        circles.forEach(c => c.classList.remove('active'));
-        litCount = 0;
+      // ★ 元の “申します” 演出：200回コンフェティだけ
+      for (let i = 0; i < 200; i++) {
+        confetti({
+          particleCount: 5 + Math.floor(Math.random() * 10),
+          spread: 80,
+          origin: { y: 0.6 }
+        });
       }
     } else {
       // 残念演出
