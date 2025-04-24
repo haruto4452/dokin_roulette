@@ -31,7 +31,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     /* 確定判定：1/3 で当たり */
-    const outcome = Math.random() < (1/3) ? '申します' : '申さず';
+    const outcome = Math.random() < (1/5) ? '申します' : '申さず';
     toggleText.textContent = outcome;
 
     if(outcome === '申します'){
