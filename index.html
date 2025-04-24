@@ -8,13 +8,17 @@
 </head>
 <body>
   <canvas id="confetti-canvas"></canvas>
+
   <div class="roulette-container">
-    <div id="message" class="message">
-      <div class="main-text">銅金と</div>
-      <div id="toggle-text" class="toggle-text">？</div>
-    </div>
+    <div class="main-text">銅金と</div>
+    <div id="toggle-text" class="toggle-text">？</div>
     <button id="spinButton" class="spin-button">回す</button>
   </div>
+
+  <!-- 残念演出用オーバーレイ -->
+  <div id="sadOverlay" class="sad-overlay">残念！</div>
+
+  <!-- ライブラリ -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script src="script.js"></script>
 </body>
