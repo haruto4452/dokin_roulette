@@ -7,20 +7,28 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- コンフェティ用 Canvas -->
   <canvas id="confetti-canvas"></canvas>
 
-  <!-- メイン UI -->
   <div class="roulette-container">
     <div class="main-text">銅金と</div>
     <div id="toggle-text" class="toggle-text">？</div>
     <button id="spinButton" class="spin-button">回す</button>
   </div>
 
-  <!-- 残念演出オーバーレイ -->
+  <!-- 残念演出用オーバーレイ -->
   <div id="sadOverlay" class="sad-overlay">残念！</div>
-  <!-- ラッシュ演出オーバーレイ -->
-  <div id="rushOverlay" class="rush-overlay">RUSH!!</div>
+
+  <!-- クリア進捗サークル -->
+  <div class="circle-container">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+  </div>
+
+  <!-- 銅金達成オーバーレイ -->
+  <div id="toukkinOverlay" class="toukkin-overlay">銅金です！！！</div>
 
   <!-- ライブラリ -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
