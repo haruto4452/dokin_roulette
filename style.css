@@ -1,39 +1,82 @@
-/style.css
 body {
-  font-family: sans-serif;
-  text-align: center;
-  margin-top: 50px;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at center, #111 0%, #000 80%);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #fff;
 }
-.container {
-  display: inline-block;
+.roulette-container {
+  perspective: 1000px;
 }
-#spinButton {
-  padding: 10px 20px;
-  font-size: 16px;
+.roulette-frame {
+  position: relative;
+  width: 360px;
+  height: 520px;
+  background: linear-gradient(145deg, #330000, #660000);
+  border: 8px solid #ffcc00;
+  border-radius: 24px;
+  box-shadow: 0 0 20px rgba(255, 204, 0, 0.8), inset 0 0 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+}
+.roulette-result {
+  font-size: 2.4rem;
+  text-shadow: 0 0 20px #ffcc00;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.spin-button {
+  width: 140px;
+  height: 60px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #111;
+  background: radial-gradient(circle at top left, #ffcc00, #ffaa00);
+  border: 4px solid #ffcc00;
+  border-radius: 12px;
+  box-shadow: 0 6px 0 #cc9900, 0 0 15px rgba(255, 204, 0, 0.6);
   cursor: pointer;
+  transition: transform 0.1s ease;
 }
-.result {
-  margin-top: 20px;
-  font-size: 24px;
+.spin-button:active {
+  transform: translateY(6px);
+  box-shadow: 0 0 5px #cc9900;
 }
-.animation {
-  margin-top: 10px;
-  font-size: 32px;
+.roulette-animation {
+  position: absolute;
+  top: 30px;
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+  pointer-events: none;
+  opacity: 0;
 }
-.animation.hit {
-  color: gold;
-  animation: pop 0.5s ease-out;
+.roulette-animation.hit {
+  color: #ffea00;
+  text-shadow: 0 0 20px #ffea00, 0 0 40px #ffcc00;
+  animation: pop 0.6s ease-out forwards;
 }
-.animation.rush {
-  color: red;
-  animation: shake 0.5s ease-in-out;
+.roulette-animation.rush {
+  color: #ff4444;
+  text-shadow: 0 0 20px #ff4444, 0 0 40px #ff0000;
+  animation: shake 0.6s ease-in-out forwards;
 }
 @keyframes pop {
-  0% { transform: scale(0); }
+  0% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1.2); }
   100% { transform: scale(1); }
 }
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
+  0%, 100% { opacity: 1; transform: translateX(0); }
+  20%, 60% { transform: translateX(-10px); }
+  40%, 80% { transform: translateX(10px); }
 }
