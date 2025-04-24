@@ -1,102 +1,75 @@
-/* 全画面背景 */
+/* ベース設定 */
 html, body {
   margin: 0;
   padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: #000;
+  width: 100%; height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: radial-gradient(circle at center, #111 0%, #000 80%);
   font-family: 'Arial Black', sans-serif;
   color: #fff;
+  overflow: hidden;
   position: relative;
 }
 
-/* 背景パルスアニメーション */
+/* 背景パルス */
 body::before {
   content: "";
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: radial-gradient(circle at 50% 50%, rgba(255,0,0,0.2), transparent 70%);
+  background: radial-gradient(circle at center, rgba(255,0,0,0.2), transparent 70%);
   animation: bgPulse 4s ease-in-out infinite;
   z-index: 0;
 }
 @keyframes bgPulse {
-  0%, 100% { opacity: 0.2; }
+  0%,100% { opacity: 0.2; }
   50% { opacity: 0.5; }
 }
 
 .roulette-container {
   position: relative;
   z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
 }
 
-/* ルーレットホイール */
-.wheel {
-  width: 400px;
-  height: 400px;
-  border-radius: 50%;
-  background: conic-gradient(
-    #ffcc00 0deg 36deg,
-    #ff4444 36deg 72deg,
-    #ffcc00 72deg 108deg,
-    #ff4444 108deg 144deg,
-    #ffcc00 144deg 180deg,
-    #ff4444 180deg 216deg,
-    #ffcc00 216deg 252deg,
-    #ff4444 252deg 288deg,
-    #ffcc00 288deg 324deg,
-    #ff4444 324deg 360deg
-  );
-  border: 8px solid #ffe066;
-  box-shadow:
-    0 0 30px rgba(255, 204, 0, 0.8),
-    inset 0 0 20px rgba(255,255,255,0.3);
-  transition: transform 3s ease-out;
+.message {
+  text-shadow: 0 0 20px #ffcc00;
+}
+.main-text {
+  font-size: 3rem;
+}
+.toggle-text {
+  font-size: 4rem;
+  margin-top: 0.5em;
+  min-height: 1.2em;
+  transition: opacity 0.2s;
 }
 
-/* 矢印ポインター */
-.pointer {
-  position: absolute;
-  top: calc(50% - 200px - 20px);
-  width: 0;
-  height: 0;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-  border-bottom: 40px solid #fff;
-  z-index: 2;
-}
-
-/* 回すボタン */
 .spin-button {
-  margin-top: 20px;
-  padding: 15px 30px;
+  margin-top: 2em;
+  padding: 15px 40px;
   font-size: 1.2rem;
+  font-weight: bold;
   background: radial-gradient(circle at top left, #ffcc00, #ffaa00);
   border: none;
   border-radius: 8px;
   box-shadow: 0 6px 0 #cc9900, 0 0 20px rgba(255,204,0,0.7);
+  color: #111;
   cursor: pointer;
-  transition: transform .1s;
-  z-index: 1;
+  transition: transform 0.1s;
 }
 .spin-button:active {
   transform: translateY(6px);
   box-shadow: 0 0 10px #cc9900;
 }
 
-/* 結果表示 */
-.roulette-result {
-  margin-top: 20px;
-  font-size: 2.5rem;
-  text-shadow: 0 0 20px #ffcc00, 0 0 40px #ff0000;
-  opacity: 0;
-  transition: opacity .5s;
-  z-index: 1;
+/* コンフェティキャンバス */
+#confetti-canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
 }
