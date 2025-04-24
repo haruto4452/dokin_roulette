@@ -1,0 +1,39 @@
+/style.css
+body {
+  font-family: sans-serif;
+  text-align: center;
+  margin-top: 50px;
+}
+.container {
+  display: inline-block;
+}
+#spinButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.result {
+  margin-top: 20px;
+  font-size: 24px;
+}
+.animation {
+  margin-top: 10px;
+  font-size: 32px;
+}
+.animation.hit {
+  color: gold;
+  animation: pop 0.5s ease-out;
+}
+.animation.rush {
+  color: red;
+  animation: shake 0.5s ease-in-out;
+}
+@keyframes pop {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
