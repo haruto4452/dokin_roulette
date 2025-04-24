@@ -1,4 +1,3 @@
-/script.js
 // DOM読み込み後に初期化
 window.addEventListener('DOMContentLoaded', () => {
   const spinButton = document.getElementById('spinButton');
