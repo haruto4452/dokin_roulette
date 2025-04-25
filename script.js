@@ -1,4 +1,4 @@
-indow.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () => {
   const spinButton      = document.getElementById('spinButton');
   const toggleText      = document.getElementById('toggle-text');
   const sadOverlay      = document.getElementById('sadOverlay');
