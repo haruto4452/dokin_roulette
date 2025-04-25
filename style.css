@@ -1,15 +1,24 @@
-html, body{
+/* =====================  共通ベース  ===================== */
+:root{
+  /* 画面幅に応じてスケールさせるサイズを CSS 変数化 */
+  --fs-main  : clamp(2.4rem , 6vw  , 4rem);   /* 「銅金と」 */
+  --fs-toggle: clamp(3rem   , 8vw  , 5rem);   /* 「申します」等 */
+  --fs-button: clamp(1rem   , 3.5vw, 1.4rem); /* ボタン文字 */
+  --size-dot : clamp(14px   , 4vw  , 20px);   /* 右下の丸 */
+  --gap-dot  : clamp(6px    , 2vw  , 10px);   /* 丸の間隔 */
+}
+
+/* 画面を中央寄せ＆背景設定 */
+html,body{
   margin:0; padding:0;
   width:100%; height:100%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  display:flex; justify-content:center; align-items:center;
   background:radial-gradient(circle at center,#111 0%,#000 90%);
   font-family:'Arial Black',sans-serif;
-  color:#fff;
-  overflow:hidden;
-  position:relative;
+  color:#fff; overflow:hidden; position:relative;
 }
+
+/* 背景パルスはそのまま */
 body::before{
   content:"";
   position:absolute; top:-50%; left:-50%;
@@ -20,47 +29,71 @@ body::before{
 }
 @keyframes bgPulse{0%,100%{opacity:.2;}50%{opacity:.6;}}
 
+/* =====================  メイン UI  ===================== */
 .main-wrapper{z-index:1;}
 .roulette-container{text-align:center;}
-.main-text {font-size:4rem; text-shadow:0 0 20px #ffd700;}
-.toggle-text{font-size:5rem; margin-top:.2em; min-height:1.2em;}
+
+.main-text {               /* 「銅金と」 */
+  font-size:var(--fs-main);
+  text-shadow:0 0 2vw #ffd700;
+}
+.toggle-text{              /* 「申します」「申さず」 */
+  font-size:var(--fs-toggle);
+  margin-top:.2em; min-height:1.2em;
+}
+
 .spin-button{
-  margin-top:2rem; padding:15px 50px;
-  font-size:1.4rem; font-weight:bold;
+  margin-top:2rem; padding:0.9em 2.5em;
+  font-size:var(--fs-button); font-weight:bold;
   background:radial-gradient(circle at top left,#ffd700,#ffb700);
-  border:2px solid #ffcc00; border-radius:12px;
-  color:#111; cursor:pointer;
+  color:#111; border:2px solid #ffcc00; border-radius:12px;
   box-shadow:0 6px 0 #cc9900,0 0 30px rgba(255,204,0,.8);
-  transition:transform .1s;
+  cursor:pointer; transition:transform .1s;
 }
 .spin-button:active{transform:translateY(6px); box-shadow:0 0 15px #cc9900;}
 
+/* =====================  進捗サークル  ===================== */
 .circle-container{
-  position:fixed; bottom:20px; right:20px;
-  display:flex; gap:10px; z-index:2;
+  position:fixed; bottom:clamp(12px,3vw,20px); right:clamp(12px,3vw,20px);
+  display:flex; gap:var(--gap-dot); z-index:2;
 }
 .circle{
-  width:20px; height:20px; border-radius:50%;
-  background:#fff; box-shadow:0 0 5px rgba(0,0,0,.5);
+  width:var(--size-dot); height:var(--size-dot);
+  border-radius:50%; background:#fff;
+  box-shadow:0 0 5px rgba(0,0,0,.5);
   transition:background .3s;
 }
 .circle.active{background:#ffcc00;}
+
+/* =====================  オーバーレイ類  ===================== */
+#confetti-canvas{position:fixed; inset:0; pointer-events:none; z-index:1;}
 
 .sad-overlay,
 .toukkin-overlay{
   position:fixed; inset:0;
   display:flex; align-items:center; justify-content:center;
-  font-size:6rem; pointer-events:none; opacity:0;
+  font-size:clamp(3rem, 9vw, 6rem);
+  pointer-events:none; opacity:0;
 }
 .sad-overlay{
-  color:#ccc; text-shadow:0 0 15px #000;
+  color:#ccc; text-shadow:0 0 1.5vw #000;
   background:rgba(0,0,0,.7); z-index:3;
 }
 @keyframes sadShow{
-  0%{opacity:0; transform:scale(.5) rotate(0deg);} 60%{opacity:1; transform:scale(1.05) rotate(2deg);} 100%{opacity:0; transform:scale(1) rotate(0deg);}
+  0%{opacity:0; transform:scale(.5) rotate(0deg);}
+ 60%{opacity:1; transform:scale(1.05) rotate(2deg);}
+100%{opacity:0; transform:scale(1) rotate(0deg);}
 }
 .toukkin-overlay{
-  color:#ffff66; text-shadow:0 0 30px #ff0;
+  color:#ffff66; text-shadow:0 0 3vw #ff0;
   background:rgba(0,0,0,.8); z-index:4;
 }
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+/* =====================  モバイル横幅が極端に狭い場合の調整  ===================== */
+@media (max-width:360px){
+  /* ボタンを行内いっぱいに広げ、余白を確保 */
+  .spin-button{width:90%; padding:.8em 0;}
+  .circle-container{gap:4px;}
+}
+
