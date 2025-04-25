@@ -1,27 +1,26 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>金銀とルーレット</title>
+  <title>銅金とルーレット</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- ===== メイン表示だけを中央寄せしたいのでラップ ===== -->
+  <!-- 中央ラッパー -->
   <div class="main-wrapper">
     <div class="roulette-container">
-      <div class="main-text">金銀と</div>
+      <div class="main-text">銅金と</div>
       <div id="toggle-text" class="toggle-text">？</div>
       <button id="spinButton" class="spin-button">回す</button>
     </div>
   </div>
 
-  <!-- ===== 固定オーバーレイ類（フロー外なので中央寄せに影響しない） -->
+  <!-- 固定オーバーレイと UI -->
   <canvas id="confetti-canvas"></canvas>
   <div id="sadOverlay" class="sad-overlay">残念！</div>
   <div id="toukkinOverlay" class="toukkin-overlay">銅金です！！！</div>
 
-  <!-- ===== 右下の進捗サークルもフロー外 ===== -->
   <div class="circle-container">
     <div class="circle"></div>
     <div class="circle"></div>
@@ -30,7 +29,6 @@
     <div class="circle"></div>
   </div>
 
-  <!-- ===== ライブラリ & スクリプト ===== -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script src="script.js"></script>
 </body>
