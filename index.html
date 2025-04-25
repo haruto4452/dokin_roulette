@@ -7,18 +7,21 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <canvas id="confetti-canvas"></canvas>
-
-  <div class="roulette-container">
-    <div class="main-text">銅金と</div>
-    <div id="toggle-text" class="toggle-text">？</div>
-    <button id="spinButton" class="spin-button">回す</button>
+  <!-- ===== メイン表示だけを中央寄せしたいのでラップ ===== -->
+  <div class="main-wrapper">
+    <div class="roulette-container">
+      <div class="main-text">銅金と</div>
+      <div id="toggle-text" class="toggle-text">？</div>
+      <button id="spinButton" class="spin-button">回す</button>
+    </div>
   </div>
 
+  <!-- ===== 固定オーバーレイ類（フロー外なので中央寄せに影響しない） -->
+  <canvas id="confetti-canvas"></canvas>
   <div id="sadOverlay" class="sad-overlay">残念！</div>
-  <div id="chanceOverlay" class="chance-overlay">銅金チャーンス！！</div>
-  <div id="rushEntryOverlay" class="rush-entry-overlay">銅金ターーーイム！！！</div>
+  <div id="toukkinOverlay" class="toukkin-overlay">銅金です！！！</div>
 
+  <!-- ===== 右下の進捗サークルもフロー外 ===== -->
   <div class="circle-container">
     <div class="circle"></div>
     <div class="circle"></div>
@@ -27,9 +30,7 @@
     <div class="circle"></div>
   </div>
 
-  <div id="toukkinOverlay" class="toukkin-overlay">銅金です！！！</div>
-  <div id="rushIndicator" class="rush-indicator">ラッシュ中</div>
-
+  <!-- ===== ライブラリ & スクリプト ===== -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script src="script.js"></script>
 </body>
