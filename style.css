@@ -46,8 +46,6 @@ body::before{
 }
 .circle.active{background:#ffcc00;}
 
-#confetti-canvas{position:fixed; inset:0; pointer-events:none; z-index:1;}
-
 .sad-overlay,
 .toukkin-overlay{
   position:fixed; inset:0;
