@@ -36,7 +36,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if(outcome === '申します'){
       /* ---- 当たり演出 ---- */
       for(let i=0;i<250;i++){
-        confetti({ particleCount:6+Math.floor(Math.random()*8), spread:70, origin:{y:.6} });
+        confetti({ particleCount:6+Math.floor(Math.random()*8), spread:70, origin:{ x:0.5, y:0.6 } });
       }
       if(litCount < circles.length){
         circles[litCount].classList.add('active');
